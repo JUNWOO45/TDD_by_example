@@ -28,22 +28,37 @@ class Money {
     return new Sum(this.amount, add.amount)
   }
 
+  // reduce(to) {
+  //   return this;
+  // }
+
   reduce(amount, to) {
-    // 이렇게 새로운 인스턴스를 생성하는게 맞나....
-    return new Money(amount, to);
+    const rate = this.currency === 'CHF' && to === 'USD' ? 2 : 1;
+
+    return new Money(amount / rate, to);
   }
 }
 
 class Bank {
+  constructor() {
+    this.rates = {};
+  }
+
   reduce(source, to) {
-    if(source instanceof Money) {
-      // return source;
-      return source.reduce(source.amount, to);
+    return source.reduce(source.amount, to);
+  }
+
+  rate(from, to) {
+    if(from === to) {
+      return 1;
     }
 
-    const sum = source;
+    console.log('this.rates ::: ', this.rates);
+    return this.rates[from+'-'+to];
+  }
 
-    return sum.reduce(to);
+  addRate(from, to, rate) {
+    this.rates[from+'-'+to] = rate;
   }
 }
 
@@ -51,11 +66,29 @@ class Sum {
   constructor(augend, addend) {
     this.augend = augend;
     this.addend = addend;
+    this.amount = this.augend + this.addend;
   }
 
+  // 여기 리팩토링 가능하겠다. 바로 this.amount 써먹으면 되겟다.
+
   reduce(to) {
-    const amount = this.augend + this.addend;
-    return new Money(amount, to);
+    return new Money(this.amount, to);
+  }
+}
+
+class Pair {
+  constructor(from, to) {
+    this.from = from;
+    this.to = to;
+  }
+
+  equals(obj) {
+    const pair = obj;
+    return this.from === pair.from && this.to === pair.to;
+  }
+
+  hashcode() {
+    return 0;
   }
 }
 
@@ -144,4 +177,12 @@ test('Reduce Money test', () => {
   const result = bank.reduce(new Money().dollar(1), 'USD');
 
   expect(new Money().dollar(1).amount).toBe(result.amount);
-})
+});
+
+test('Reduce money different currency', () => {
+  const bank = new Bank();
+  bank.addRate('CHF', 'USD', 2);
+  const result = bank.reduce(new Money().franc(2), 'USD');
+
+  expect(new Money().dollar(1).amount).toBe(result.amount)
+});
