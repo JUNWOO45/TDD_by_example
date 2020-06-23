@@ -1,0 +1,23 @@
+{
+  "name": "TDD_by_example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JUNWOO45/TDD_by_example.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JUNWOO45/TDD_by_example/issues"
+  },
+  "homepage": "https://github.com/JUNWOO45/TDD_by_example#readme",
+  "devDependencies": {
+    "jest": "^26.0.1"
+  }
+}
