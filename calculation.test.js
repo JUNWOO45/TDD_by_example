@@ -6,6 +6,10 @@ class Dollar {
   times(multiplier) {
     return new Dollar(this.amount * multiplier);
   }
+
+  equals(instance) {
+    return this.amount === instance.amount;
+  }
 }
 
 test('multiply test', () => {
@@ -17,3 +21,12 @@ test('multiply test', () => {
   const product2 = five.times(5);
   expect(product2.amount).toBe(25);
 });
+
+test('test equality', () => {
+  const five = new Dollar(5);
+  const ex1 = five.equals(new Dollar(5))
+  const ex2 = five.equals(new Dollar(6))
+
+  expect(ex1).toBeTruthy();
+  expect(ex2).toBeFalsy();
+})
