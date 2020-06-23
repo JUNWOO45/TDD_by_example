@@ -4,13 +4,16 @@ class Dollar {
   }
 
   times(multiplier) {
-    this.amount *= multiplier;
+    return new Dollar(this.amount * multiplier);
   }
 }
 
 test('multiply test', () => {
-  const dollar = new Dollar(5);
-  dollar.times(2)
+  const five = new Dollar(5);
+  const product1 = five.times(2);
+  expect(product1.amount).toBe(10);
+  expect(product1.times(5).amount).toBe(50);
   
-  expect(dollar.amount).toBe(10);
+  const product2 = five.times(5);
+  expect(product2.amount).toBe(25);
 });
