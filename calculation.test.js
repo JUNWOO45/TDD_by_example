@@ -6,15 +6,23 @@ class Money {
   equals(instance) {
     return this.amount === instance.amount;
   }
+
+  dollar(amount) {
+    return new Dollar(amount);
+  }
+
+  franc(amount) {
+    return new Franc(amount);
+  }
+
+  times(multiplier) {
+    return new Money(this.amount * multiplier);
+  }
 }
 
 class Dollar extends Money{
   constructor(amount) {
     super(amount);
-  }
-
-  times(multiplier) {
-    return new Dollar(this.amount * multiplier);
   }
 }
 
@@ -22,35 +30,45 @@ class Franc extends Money{
   constructor(amount) {
     super(amount);
   }
-
-  times(multiplier) {
-    return new Franc(this.amount * multiplier);
-  }
 }
 
 // 테스트 케이스
 test('Franc class test', () => {
-  const five = new Franc(5);
-  expect(five.times(2).amount).toBe(new Franc(10).amount);
-  expect(five.times(3).amount).toBe(new Franc(15).amount);
+  const five = new Money().franc(5);
+  expect(five.times(2).amount).toBe(new Money().franc(10).amount);
+  expect(five.times(3).amount).toBe(new Money().franc(15).amount);
 })
 
 test('Dollay class test', () => {
-  const five = new Dollar(5);
-  expect(five.times(2).amount).toBe((new Dollar(10)).amount);
-  expect(five.times(5).amount).toBe((new Dollar(25)).amount);
+  const five = new Money().dollar(5);
+  expect(five.times(2).amount).toBe(new Money().dollar(10).amount);
+  expect(five.times(5).amount).toBe(new Money().dollar(25).amount);
 });
 
 test('test equality', () => {
-  const ex1 = new Dollar(5).equals(new Dollar(5));
-  const ex2 = new Dollar(5).equals(new Dollar(6));
+  const ex1 = new Money().dollar(5).equals(new Money().dollar(5));
+  const ex2 = new Money().dollar(5).equals(new Money().dollar(6));
 
   expect(ex1).toBeTruthy();
   expect(ex2).toBeFalsy();
 
-  const ex3 = new Franc(7).equals(new Franc(7));
-  const ex4 = new Franc(7).equals(new Franc(8));
+  const ex3 = new Money().franc(7).equals(new Money().franc(7));
+  const ex4 = new Money().franc(7).equals(new Money().franc(8));
 
   expect(ex3).toBeTruthy();
   expect(ex4).toBeFalsy();
+
+  const ex5 = (new Money().franc(5)).equals(new Money().dollar(5));
+  // expect(ex5).toBeFalsy(); //실패한다. Dollar는 Franc라는 소리.
+  expect(ex5).toBeTruthy();
+});
+
+
+test('multiplication test', () => {
+  const dollarTen = (new Money()).dollar(10);
+
+  expect(dollarTen.amount).toBe(new Money().dollar(5).times(2).amount);
+  expect(dollarTen.amount).toBe(new Money(5).times(2).amount);
+  expect(dollarTen.amount).toBe(new Money().dollar(20).times(0.5).amount);
+  expect(dollarTen.amount).toBe(new Money(20).times(0.5).amount);
 })
