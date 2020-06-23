@@ -9,11 +9,11 @@ class Money {
   }
 
   dollar(amount) {
-    return new Dollar(amount, 'USD');
+    return new Money(amount, 'USD');
   }
 
   franc(amount) {
-    return new Franc(amount, 'CHF');
+    return new Money(amount, 'CHF');
   }
 
   times(multiplier) {
@@ -22,18 +22,6 @@ class Money {
 
   getCurrency() {
     return this.currency;
-  }
-}
-
-class Dollar extends Money{
-  constructor(amount, currency = 'USD') {
-    super(amount, currency);
-  }
-}
-
-class Franc extends Money{
-  constructor(amount, currency = 'CHF') {
-    super(amount, currency);
   }
 }
 
@@ -54,20 +42,13 @@ test('Dollay class test', () => {
   expect(five.times(5).amount).toBe(money.dollar(25).amount);
 });
 
-test('test equality', () => {
+test('equality TEST', () => {
   const money = new Money();
 
   const ex1 = money.dollar(5).equals(money.dollar(5));
   const ex2 = money.dollar(5).equals(money.dollar(6));
-
   expect(ex1).toBeTruthy();
   expect(ex2).toBeFalsy();
-
-  const ex3 = money.franc(7).equals(money.franc(7));
-  const ex4 = money.franc(7).equals(money.franc(8));
-
-  expect(ex3).toBeTruthy();
-  expect(ex4).toBeFalsy();
 
   const ex5 = (money.franc(5)).equals(money.dollar(5));
   // expect(ex5).toBeFalsy(); //실패한다. Dollar는 Franc라는 소리.
