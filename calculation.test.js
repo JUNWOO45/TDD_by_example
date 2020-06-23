@@ -12,14 +12,34 @@ class Dollar {
   }
 }
 
+class Franc {
+  constructor(amount) {
+    this.amount = amount;
+  }
+
+  times(multiplier) {
+    return new Franc(this.amount * multiplier);
+  }
+
+  equals(instance) {
+    return this.amount === instance.amount;
+  }
+}
+
+
+// 테스트 케이스
+
+test('Franc class test', () => {
+  const five = new Franc(5);
+
+  expect(new Franc(10).amount).toBe(five.times(2).amount);
+  expect(new Franc(15).amount).toBe(five.times(3).amount);
+})
+
 test('multiply test', () => {
   const five = new Dollar(5);
-  const product1 = five.times(2);
-  expect(product1.amount).toBe(10);
-  expect(product1.times(5).amount).toBe(50);
-  
-  const product2 = five.times(5);
-  expect(product2.amount).toBe(25);
+  expect(five.times(2).amount).toBe((new Dollar(10)).amount);
+  expect(five.times(5).amount).toBe((new Dollar(25)).amount);
 });
 
 test('test equality', () => {
