@@ -1,6 +1,9 @@
 const fib = require('./fibonacci');
 
 test('test fib', () => {
-  expect(fib(0)).toBe(0);
-  expect(fib(1)).toBe(1);
+  const testList = [[0,0], [1,1]];
+
+  testList.forEach(arr => {
+    expect(fib(arr[0])).toBe(arr[1]);
+  })
 });
