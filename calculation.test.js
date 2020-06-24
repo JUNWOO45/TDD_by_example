@@ -28,14 +28,16 @@ class Money {
     return new Sum(this.amount, add.amount)
   }
 
-  // reduce(to) {
-  //   return this;
-  // }
-
   reduce(amount, to) {
     const rate = this.currency === 'CHF' && to === 'USD' ? 2 : 1;
 
     return new Money(amount / rate, to);
+    // if (this.currency === to) {
+    //   return this;
+    // }
+
+    // const rate = bank.rate(this.currency, to);
+    // return new Money(this.amount / rate, to);
   }
 }
 
